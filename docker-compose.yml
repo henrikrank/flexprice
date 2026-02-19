@@ -92,8 +92,10 @@ services:
         condition: service_healthy
       temporal:
         condition: service_started
-    ports:
-      - "8080:8080"
+    # Port fix: don't bind host 8080 (Coolify proxy already uses it).
+    # Use Coolify domain routing to container port 8080 instead.
+    expose:
+      - "8080"
     environment:
       - FLEXPRICE_DEPLOYMENT_MODE=api
       - FLEXPRICE_POSTGRES_HOST=postgres
